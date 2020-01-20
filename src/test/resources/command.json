@@ -1,0 +1,21 @@
+{
+  "TMTEnvelope": {
+    "header": {
+      "clientVersion": "3.0.0.0",
+      "client": "TMTand",
+      "token": "NoSoupForYou"
+    },
+    "body": {
+      "command": "FindPatients",
+      "patient": {
+        "homeCountyCode": "223",
+        "clinicId": "223",
+        "isArchived": "0",
+        "cpr": {
+          "__compare": "startswith",
+          "_text_": "0102"
+        }
+      }
+    }
+  }
+}

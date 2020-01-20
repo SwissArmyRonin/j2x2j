@@ -27,6 +27,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
 public class ConversionTest {
+	/**
+	 * Debug method to validate and dump XML files.
+	 * 
+	 * @param doc
+	 * @param out
+	 * @throws IOException
+	 * @throws TransformerException
+	 */
 	public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
 		TransformerFactory tf = TransformerFactory.newInstance();
 		Transformer transformer = tf.newTransformer();
@@ -41,19 +49,20 @@ public class ConversionTest {
 
 	@Test
 	public void testAntFile() {
-		isIdempotent("/example.xml");
+		isIdempotent("/build.xml");
 	}
 
-	@Test
-	public void testSmallFile() {
-		isIdempotent("/small.xml");
-	}
-
+	/**
+	 * Convert a file from XML to JSON to XML to JSON, then verify that there were
+	 * no changes.
+	 */
+	@SneakyThrows
 	private void isIdempotent(String fileName) {
 		Document doc = loadXml(fileName);
 
 		JsonNode json = xmlToJson().convert(doc);
 		Document xml = jsonToXml().convert(json);
+//		printDocument(xml, System.out);
 		JsonNode json2 = xmlToJson().convert(xml);
 
 		assertEquals(json, json2);
